@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Data User</title>
+</head>
     <body>
         <h1>Data User</h1>
         <a href="/user/tambah/">+ Tambah User</a>
