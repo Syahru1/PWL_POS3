@@ -49,7 +49,7 @@
                 ajax: {
                     "url": "{{ url('kategori/list') }}",
                     "dataType": "json",
-                    "type": "GET"
+                    "type": "POST"
                 },
                 columns: [{
                         data: "kategori_id",

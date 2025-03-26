@@ -54,7 +54,7 @@
                 ajax: {
                     "url": "{{ url('suplier/list') }}",
                     "dataType": "json",
-                    "type": "GET"
+                    "type": "POST"
                 },
                 columns: [{
                         data: "DT_RowIndex",

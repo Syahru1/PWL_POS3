@@ -106,7 +106,7 @@ class KategoriController extends Controller
         }
 
         // Redirect jika bukan AJAX request
-        return redirect('/kategori');
+        return redirect('/');
     }
 
 
