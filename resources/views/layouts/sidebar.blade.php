@@ -80,5 +80,25 @@
         </li>
       </ul>
     </nav>
+
+    <!-- Logout Button -->
+    <br><br>
+    <div class="mt-4 mb-3 text-center">
+      <a href="javascript:void(0);" class="btn btn-danger btn-block" id="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>    
+      <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;"></form>
+    </div>
+
+    <!-- Script Konfirmasi Logout -->
+  <script>
+    document.getElementById('logout-btn').addEventListener('click', function (e) {
+        e.preventDefault();
+        if (confirm('Yakin ingin logout?')) {
+            document.getElementById('logout-form').submit();
+        }
+    });
+  </script>
+  </div>
     <!-- /.sidebar-menu -->
   </div>

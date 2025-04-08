@@ -473,7 +473,13 @@ class UserController extends Controller
                     'status' => true,
                     'message' => 'Data berhasil dihapus'
                 ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
             }
         }
+        return redirect('/');
     }
 };      
