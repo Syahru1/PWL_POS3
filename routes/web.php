@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
     
     // Routes for Suplier
-    // artinya semua route di dalam group ini harus punya role ADM (Administrator)
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
     Route::middleware(['authorize:ADM, MNG'])->group(function () {
         Route::group(['prefix' => 'suplier'], function () {
             Route::get('/', [SupplierController::class, 'index']);         
@@ -122,8 +122,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
     
     // Routes for Barang
-    // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager)
-    Route::middleware(['authorize:ADM, MNG'])->group(function () {
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager), dan STF (Staff)
+    Route::middleware(['authorize:ADM, MNG, STF'])->group(function () {
         Route::group(['prefix' => 'barang'], function () {
             Route::get('/', [BarangController::class, 'index']);           
             Route::post('/list', [BarangController::class, 'list']);       
