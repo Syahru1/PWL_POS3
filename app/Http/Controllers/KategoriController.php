@@ -8,7 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KategoriController extends Controller
 {
@@ -552,4 +552,63 @@ public function import_ajax(Request $request)
 
     return redirect('/kategori');
 }
+//fungsi export
+public function export_excel()
+{
+    //ambil data kategori
+    $kategori = KategoriModel::select(
+        'kategori_id',
+        'kategori_kode',
+        'kategori_nama',
+    )
+        ->orderBy('kategori_id')
+        ->get();
+
+    //load spreadsheet
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    //set header
+    $sheet->setCellValue('A1', 'No');
+    $sheet->setCellValue('B1', 'Kode kategori');
+    $sheet->setCellValue('C1', 'Nama kategori');
+
+    $sheet->getStyle('A1:C1')->getFont()->setBold(true); ///bold header
+
+    //set data
+    $no = 1;
+    $baris = 2;
+    foreach ($kategori as $row) {
+        $sheet->setCellValue('A' . $baris, $no);
+        $sheet->setCellValue('B' . $baris, $row->kategori_kode);
+        $sheet->setCellValue('C' . $baris, $row->kategori_nama);
+        $no++;
+        $baris++;
+    }
+
+    //set lebar kolom
+    foreach (range('A', 'C') as $columnID) {
+        $sheet->getColumnDimension($columnID)->setAutoSize(true); //set autosize
+    }
+
+    //set judul file
+    $sheet->setTitle('Data Kategori'); // set title sheet
+
+    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    $filename = 'Data Kategori ' . date(format: 'Y-m-d H:i:s') . '.xlsx';
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $filename . '"');
+    header('Cache-Control: max-age=0');
+    header('Cache-Control: max-age=1');
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: cache, must-revalidate');
+    header('Pragma: public');
+
+    $writer->save('php://output');
+    exit;
+
+}
+
 }
