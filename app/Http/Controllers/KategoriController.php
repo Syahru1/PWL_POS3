@@ -610,5 +610,20 @@ public function export_excel()
     exit;
 
 }
+    //export pdf
+    public function export_pdf()
+    {
+        $kategori = KategoriModel::orderBy('kategori_id')
+            ->orderBy('kategori_kode')
+            ->get();
+ 
+        //gunakan barryvdh dompdf
+        $pdf = PDF::loadview('kategori.export_pdf', ['kategori' => $kategori]);
+        $pdf->setPaper('a4', 'potrait');
+        $pdf->setOption("isRemoteEnabled", true);
+        $pdf->render();
+ 
+        return $pdf->download('Data kategori ' . date('Y-m-d H:i:s') . '.pdf');
+    }
 
 }

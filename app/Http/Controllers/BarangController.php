@@ -628,5 +628,23 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
  
          $writer->save('php://output');
          exit;
-     }
+    }
+
+     //export pdf
+    public function export_pdf()
+    {
+        $barang = BarangModel::orderBy('kategori_id')
+            ->orderBy('kategori_id')
+            ->orderBy('barang_kode')
+            ->with('kategori')
+            ->get();
+
+        //gunakan barryvdh dompdf
+        $pdf = PDF::loadview('barang.export_pdf', ['barang' => $barang]);
+        $pdf->setPaper('a4', 'potrait');
+        $pdf->setOption("isRemoteEnabled", true);
+        $pdf->render();
+
+        return $pdf->stream('Data Barang ' . date('Y-m-d H:i:s') . '.pdf');
+    }
 }

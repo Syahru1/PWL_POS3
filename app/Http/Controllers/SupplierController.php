@@ -688,4 +688,20 @@ public function update_ajax(Request $request, string $id)
         $writer->save('php://output');
         exit;
     }
+    
+    //export pdf
+    public function export_pdf()
+    {
+        $suplier = SupplierModel::orderBy('suplier_id')
+            ->orderBy('suplier_id')
+            ->get();
+
+        //gunakan barryvdh dompdf
+        $pdf = PDF::loadview('suplier.export_pdf', ['suplier' => $suplier]);
+        $pdf->setPaper('a4', 'potrait');
+        $pdf->setOption("isRemoteEnabled", true);
+        $pdf->render();
+
+        return $pdf->download('Data suplier ' . date('Y-m-d H:i:s') . '.pdf');
+    }
 }
