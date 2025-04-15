@@ -5,8 +5,13 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('level/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
+                <button onclick="modalAction('{{ url('/level/import') }}')" class="btn btn-info">Import
+                    Kategori</button>
+                <a href="{{ url('/level/export_excel') }}" class="btn btn-primary"><i class="fa fa-file excel"></i> Export
+                    Level</a>
+                <a href="{{ url('/level/export_pdf') }}" class="btn btn-danger"><i class="fa fa-file pdf"></i> Export
+                    PDF</a>
+                <button onclick="modalAction('{{ url('level/create_ajax') }}')" class="btn btn-success">
                     Tambah Ajax
                 </button>
             </div>
@@ -47,13 +52,17 @@
             });
         }
 
+        var tableLevel;
         $(document).ready(function() {
-            var dataLevel = $('#table_level').DataTable({
+            tableLevel = $('#table_level').DataTable({
                 serverSide: true,
                 ajax: {
                     "url": "{{ url('level/list') }}",
                     "dataType": "json",
-                    "type": "POST"
+                    "type": "GET",
+                    "data": function(d) {
+                        d.filter_level = $('.filter_level').val();
+                    }
                 },
                 columns: [{
                         data: "DT_RowIndex",
@@ -62,7 +71,7 @@
                         searchable: false
                     },
                     {
-                        data: "level_kode",
+                        data: "level_code",
                         className: "",
                         orderable: true,
                         searchable: true
@@ -80,6 +89,14 @@
                         searchable: false
                     }
                 ]
+            });
+            $('#table_level_filter input').unbind().bind().on('keyup', function(e) {
+                if (e.keyCode == 13) { // enter key
+                    tableLevel.search(this.value).draw();
+                }
+            });
+            $('.filter_level').change(function() {
+                tableLevel.draw();
             });
         });
     </script>
