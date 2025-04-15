@@ -8,6 +8,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter id, maka harus berupa angka
 
@@ -162,3 +163,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         });
     // });
 });
+
+
+Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth');
+Route::post('/profile/update-foto', [ProfileController::class, 'uploadFoto'])->middleware('auth');
