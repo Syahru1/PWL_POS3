@@ -168,6 +168,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 
     Route::group(['prefix' => 'profile'], function () {
-        Route::post('/update-avatar', [ProfileController::class, 'updateAvatar']);
+    Route::post('/update-avatar', [ProfileController::class, 'updateAvatar']);
+    Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->middleware('auth');
     });
 });
