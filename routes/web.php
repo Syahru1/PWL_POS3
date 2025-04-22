@@ -44,30 +44,32 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     // Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
 
     // Routes for User
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [UserController::class, 'index']);           // menampilkan halaman awal user
-        Route::get('/list', [UserController::class, 'list']);       // menampilkan data user dalam bentuk json untuk datatables   
-        Route::get('/create', [UserController::class, 'create']);    // menampilkan halaman form tambah user
-        Route::post('/', [UserController::class, 'store']);          // menyimpan data user baru
-        Route::get('/create_ajax', [UserController::class, 'create_ajax']); // Menampilkan halaman form tambah user Ajax
-        Route::post('/ajax', [UserController::class, 'store_ajax']); // Menyimpan data user baru Ajax
-        Route::get('/{id}', [UserController::class, 'show']);        // menampilkan detail user
-        Route::get('/{id}/edit', [UserController::class, 'edit']);   // menampilkan halaman form edit user
-        Route::put('/{id}', [UserController::class, 'update']);      // menyimpan perubahan data user
-        Route::get('/{id}/edit_ajax', [UserController::class, 'edit_ajax']);  // Menampilkan halaman form edit user Ajax
-        Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']); // Menyimpan perubahan data user Ajax
-        Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);   // Untuk tampilan form confirm delete user Ajax
-        Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
-        Route::delete('/{id}', [UserController::class, 'destroy']);  // menghapus data user
-        Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
-        Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
-        Route::get('/export_excel', [UserController::class, 'export_excel']); // export excel
-        Route::get('/export_pdf', [UserController::class, 'export_pdf']); // export pdf
+    Route::middleware(['authorize:ADM'])->group(function () {
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', [UserController::class, 'index']);           // menampilkan halaman awal user
+            Route::get('/list', [UserController::class, 'list']);       // menampilkan data user dalam bentuk json untuk datatables   
+            Route::get('/create', [UserController::class, 'create']);    // menampilkan halaman form tambah user
+            Route::post('/', [UserController::class, 'store']);          // menyimpan data user baru
+            Route::get('/create_ajax', [UserController::class, 'create_ajax']); // Menampilkan halaman form tambah user Ajax
+            Route::post('/ajax', [UserController::class, 'store_ajax']); // Menyimpan data user baru Ajax
+            Route::get('/{id}', [UserController::class, 'show']);        // menampilkan detail user
+            Route::get('/{id}/edit', [UserController::class, 'edit']);   // menampilkan halaman form edit user
+            Route::put('/{id}', [UserController::class, 'update']);      // menyimpan perubahan data user
+            Route::get('/{id}/edit_ajax', [UserController::class, 'edit_ajax']);  // Menampilkan halaman form edit user Ajax
+            Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']); // Menyimpan perubahan data user Ajax
+            Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);   // Untuk tampilan form confirm delete user Ajax
+            Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
+            Route::delete('/{id}', [UserController::class, 'destroy']);  // menghapus data user
+            Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
+            Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
+            Route::get('/export_excel', [UserController::class, 'export_excel']); // export excel
+            Route::get('/export_pdf', [UserController::class, 'export_pdf']); // export pdf
+        });
     });
 
     // Routes for Level
     // artinya ssemua route di dalam group ini harus punya role ADM (Administrator)
-    // Route::middleware(['authorize:ADM'])->group(function () {
+    Route::middleware(['authorize:ADM'])->group(function () {
         // Route::prefix('level')->group(function () {
         Route::group(['prefix' => 'level'], function () {
             Route::get('/', [LevelController::class, 'index']);          
@@ -89,33 +91,35 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::get('/export_excel', [LevelController::class, 'export_excel']); // export excel
             Route::get('/export_pdf', [LevelController::class, 'export_pdf']); // export pdf
         });
-    // });
-    
-    // Routes for Kategori
-    Route::group(['prefix' => 'kategori'], function () {
-        Route::get('/', [KategoriController::class, 'index']);          
-        Route::get('/list', [KategoriController::class, 'list']);       
-        Route::get('/create', [KategoriController::class, 'create']);    
-        Route::post('/', [KategoriController::class, 'store']);          
-        Route::get('/create_ajax', [KategoriController::class, 'create_ajax']); 
-        Route::post('/ajax', [KategoriController::class, 'store_ajax']); 
-        Route::get('/{id}', [KategoriController::class, 'show']);     
-        Route::get('/{id}/edit', [KategoriController::class, 'edit']);   
-        Route::put('/{id}', [KategoriController::class, 'update']);      
-        Route::get('/{id}/edit_ajax', [KategoriController::class, 'edit_ajax']);  
-        Route::put('/{id}/update_ajax', [KategoriController::class, 'update_ajax']); 
-        Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']);   
-        Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); 
-        Route::delete('/{id}', [KategoriController::class, 'destroy']);  
-        Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
-        Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
-        Route::get('/export_excel', [KategoriController::class, 'export_excel']); // export excel
-        Route::get('/export_pdf', [KategoriController::class, 'export_pdf']); // export pdf
     });
     
+    // Routes for Kategori
+    Route::middleware(['authorize:MNG'])->group(function () {
+        Route::group(['prefix' => 'kategori'], function () {
+            Route::get('/', [KategoriController::class, 'index']);          
+            Route::get('/list', [KategoriController::class, 'list']);       
+            Route::get('/create', [KategoriController::class, 'create']);    
+            Route::post('/', [KategoriController::class, 'store']);          
+            Route::get('/create_ajax', [KategoriController::class, 'create_ajax']); 
+            Route::post('/ajax', [KategoriController::class, 'store_ajax']); 
+            Route::get('/{id}', [KategoriController::class, 'show']);     
+            Route::get('/{id}/edit', [KategoriController::class, 'edit']);   
+            Route::put('/{id}', [KategoriController::class, 'update']);      
+            Route::get('/{id}/edit_ajax', [KategoriController::class, 'edit_ajax']);  
+            Route::put('/{id}/update_ajax', [KategoriController::class, 'update_ajax']); 
+            Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']);   
+            Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); 
+            Route::delete('/{id}', [KategoriController::class, 'destroy']);  
+            Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
+            Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
+            Route::get('/export_excel', [KategoriController::class, 'export_excel']); // export excel
+            Route::get('/export_pdf', [KategoriController::class, 'export_pdf']); // export pdf
+        });
+    });
+
     // Routes for Suplier
     // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
-    // Route::middleware(['authorize:ADM, MNG'])->group(function () {
+    Route::middleware(['authorize:KSR'])->group(function () {
         Route::group(['prefix' => 'supplier'], function () {
             Route::get('/', [SupplierController::class, 'index']);         
             Route::get('/list', [SupplierController::class, 'list']);      
@@ -136,11 +140,11 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::get('/export_excel', [SupplierController::class, 'export_excel']); //  export excel
             Route::get('/export_pdf', [SupplierController::class, 'export_pdf']); // export pdf
         });
-    // });
+    });
     
     // Routes for Barang
     // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager), dan STF (Staff)
-    // Route::middleware(['authorize:ADM, MNG, STF'])->group(function () {
+    Route::middleware(['authorize:STF'])->group(function () {
         Route::group(['prefix' => 'barang'], function () {
             Route::get('/', [BarangController::class, 'index']);           
             Route::post('/list', [BarangController::class, 'list']);       
@@ -161,7 +165,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::get('/export_excel', [BarangController::class, 'export_excel']); // export excel
             Route::get('/export_pdf', [BarangController::class, 'export_pdf']); // export pdf
         });
-    // });
+    });
 
     Route::group(['prefix' => 'profile'], function () {
         Route::post('/update-avatar', [ProfileController::class, 'updateAvatar']);

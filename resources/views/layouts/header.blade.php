@@ -221,9 +221,9 @@
               <li class="nav-item dropdown me-6"> {{-- Item dropdown dalam navbar dengan margin kanan --}}
                   <a class="nav-link" data-toggle="dropdown" href="#" id="avatarDropdown">
                       {{-- Trigger dropdown --}}
-                      @if (auth()->user()->photo)
+                      @if (auth()->user()->foto_profil)
                           {{-- Jika user punya foto profil --}}
-                          <img src="{{ asset('storage/profile/' . auth()->user()->photo) }}"
+                          <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
                               class="img-circle elevation-2" alt="User Image" width="27" height="27">
                           {{-- Foto profil user kecil --}}
                       @else
@@ -235,14 +235,14 @@
                   <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"> {{-- Kontainer isi dropdown --}}
                       <div class="dropdown-item text-center"> {{-- Item pertama: tampilkan info user --}}
                           <div class="image"> {{-- Pembungkus gambar besar --}}
-                              @if (auth()->user()->photo)
+                              @if (auth()->user()->foto_ptofil)
                                   {{-- Jika user punya foto --}}
-                                  <img src="{{ asset('storage/profile/' . auth()->user()->photo) }}"
+                                  <img src="{{ asset('storage/profile/' . auth()->user()->foto_profil) }}"
                                       class="img-circle elevation-2" alt="User Image" width="100"
                                       height="100"> {{-- Foto besar user --}}
                               @else
                                   {{-- Jika tidak punya foto --}}
-                                  <img src="{{ asset('adminlte/dist/img/avatar.png') }}"
+                                  <img src="{{ asset('adminlte/dist/img/avatar5.png') }}"
                                       class="img-circle elevation-2" alt="User Image" width="100"
                                       height="100"> {{-- Foto default besar --}}
                               @endif
