@@ -105,7 +105,7 @@
                 @foreach ($level as $b)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $b->level_code }}</td>
+                        <td>{{ $b->level_kode }}</td>
                         <td>{{ $b->level_nama }}</td>
                     </tr>
                 @endforeach

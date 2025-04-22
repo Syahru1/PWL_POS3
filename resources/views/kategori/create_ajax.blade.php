@@ -59,9 +59,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
-                                text: response.message
-                                response.data.kategori_kode
-                                response.data.kategori_nama
+                                html: `Kategori <strong>${response.data.kategori_kode}</strong> - ${response.data.kategori_nama} berhasil ditambahkan.`
                             });
 
                             // Reset form setelah submit berhasil

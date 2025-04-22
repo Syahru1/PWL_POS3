@@ -3,26 +3,26 @@
 @section('content')
     <div class="card card-outline card-primary">
         <div class="card-header">
-            <h3 class="card-title">Tambah Suplier</h3>
+            <h3 class="card-title">Tambah Supplier</h3>
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url('suplier') }}" class="form-horizontal">
+            <form method="POST" action="{{ url('supplier') }}" class="form-horizontal">
                 @csrf
 
-                {{-- Input untuk Nama Suplier --}}
+                {{-- Input untuk Nama Supplier --}}
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Nama Suplier</label>
+                    <label class="col-2 control-label col-form-label">Nama Supplier</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="nama_suplier" name="nama_suplier"
-                            value="{{ old('nama_suplier') }}" required>
-                        @error('nama_suplier')
+                        <input type="text" class="form-control" id="nama_supplier" name="nama_supplier"
+                            value="{{ old('nama_supplier') }}" required>
+                        @error('nama_supplier')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
 
-                {{-- Input untuk Alamat Suplier --}}
+                {{-- Input untuk Alamat Supplier --}}
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Alamat</label>
                     <div class="col-10">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                {{-- Input untuk Nomor Telepon Suplier --}}
+                {{-- Input untuk Nomor Telepon Supplier --}}
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Nomor Telepon</label>
                     <div class="col-10">
@@ -50,7 +50,7 @@
                     <label class="col-2 control-label col-form-label"></label>
                     <div class="col-10">
                         <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                        <a class="btn btn-default ml-1" href="{{ url('suplier') }}">Kembali</a>
+                        <a class="btn btn-default ml-1" href="{{ url('supplier') }}">Kembali</a>
                     </div>
                 </div>
 

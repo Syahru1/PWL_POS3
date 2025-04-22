@@ -14,7 +14,7 @@
                     <a href="{{ asset('template_level.xlsx') }}" class="btn btn-info btn-sm" download>
                         <i class="fa fa-file-excel"></i> Download
                     </a>
-                    <small id="error-level_code" class="error-text form-text text-danger"></small>
+                    <small id="error-level_kode" class="error-text form-text text-danger"></small>
                     <small id="error-level_nama" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
@@ -65,7 +65,7 @@
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {
-                                if (prefix === 'level_code' || prefix ===
+                                if (prefix === 'level_kode' || prefix ===
                                     'level_nama') {
                                     $('#error-' + prefix).text(val[0]);
                                 }

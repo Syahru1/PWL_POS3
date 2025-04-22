@@ -92,21 +92,21 @@
         </tr>
     </table>
 
-    <h3 class="text-center">LAPORAN DATA SUPLIER</h4>
+    <h3 class="text-center">LAPORAN DATA SUPPLIER</h4>
         <table class="border-all">
             <thead>
                 <tr>
                     <th class="text-center">No</th>
-                    <th>Nama Suplier</th>
+                    <th>Nama Supplier</th>
                     <th>Kontak</th>
                     <th>Alamat</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($suplier as $b)
+                @foreach ($supplier as $b)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $b->nama_suplier }}</td>
+                        <td>{{ $b->nama_supplier }}</td>
                         <td>{{ $b->kontak }}</td>
                         <td>{{ $b->alamat }}</td>
                     </tr>

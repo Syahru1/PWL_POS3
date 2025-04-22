@@ -1,53 +1,43 @@
 <?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-
-class ProfileController extends Controller
-{
-    public function index()
-    {
-        $breadcrumb = (object)[
-            'title' => 'Profil Saya',
-            'list' => ['Home', 'Profile']
-        ];
-    
-        $page = (object)[
-            'title' => 'Halaman Profil Pengguna'
-        ];
-    
-        $activeMenu = 'profile';
-    
-        return view('profile', [
-            'breadcrumb' => $breadcrumb,
-            'page' => $page,
-            'activeMenu' => $activeMenu
-        ]);
-    }
-    
-    public function uploadFoto(Request $request)
+ 
+ namespace App\Http\Controllers;
+ 
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Facades\Storage;
+ 
+ class ProfileController extends Controller
+ {
+    public function updateAvatar(Request $request)
     {
         $request->validate([
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'photo' => 'required|image|max:2048',
         ]);
-
-        $user = Auth::user();
-
-        // Hapus foto lama jika ada
-        if ($user->foto && File::exists(public_path('uploads/' . $user->foto))) {
-            File::delete(public_path('uploads/' . $user->foto));
+    
+        $user = auth()->user(); // Pastikan $user adalah instance dari model
+        if (!$user instanceof \App\Models\UserModel) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Authenticated user is not a valid instance of the User model.',
+            ], 400);
         }
-
-        $foto = $request->file('foto');
-        $namaFoto = $user->username . '_' . time() . '.' . $foto->getClientOriginalExtension();
-        $foto->move(public_path('uploads'), $namaFoto);
-
-        $user->foto = $namaFoto;
+    
+        // Hapus foto lama jika ada
+        if ($user->foto_profil && Storage::disk('public')->exists('profile/' . $user->foto_profil)) {
+            Storage::disk('public')->delete('profile/' . $user->foto_profil);
+        }
+    
+        // Simpan foto baru
+        $filename = uniqid() . '.' . $request->file('photo')->extension();
+        $request->file('photo')->storeAs('profile', $filename, 'public');
+    
+        // Simpan nama file ke kolom foto_profil
+        $user->foto_profil = $filename; // Pastikan ini sesuai dengan nama kolom di database
         $user->save();
-
-        return back()->with('success', 'Foto profil berhasil diperbarui.');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Foto berhasil diperbarui.',
+            'photo_url' => asset('storage/profile/' . $filename),
+        ]);
     }
-}
+ }

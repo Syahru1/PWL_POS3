@@ -1,34 +1,32 @@
-<form action="{{ url('/suplier/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/supplier/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Suplier</h5>
+                <h5 class="modal-title">Import Data Supplier</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Nama Suplier</label>
-                    <input value="" type="text" name="nama_suplier" id="nama_suplier" class="form-control"
-                        required>
-                    <small id="error-nama_suplier" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>Kontak</label>
-                    <input value="" type="text" name="kontak" id="kontak" class="form-control" required>
+                    <label>Download Template</label>
+                    <a href="{{ asset('template_supplier.xlsx') }}" class="btn btn-info btn-sm" download>
+                        <i class="fa fa-file-excel"></i> Download
+                    </a>
+                    <small id="error-nama_supplier" class="error-text form-text text-danger"></small>
                     <small id="error-kontak" class="error-text form-text text-danger"></small>
+                    <small id="error-alamat" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Alamat</label>
-                    <textarea name="alamat" id="alamat" class="form-control" required></textarea>
-                    <small id="error-alamat" class="error-text form-text text-danger"></small>
+                    <label>Pilih File</label>
+                    <input type="file" name="file_supplier" id="file_supplier" class="form-control" required>
+                    <small id="error-file_supplier" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary">Upload</button>
             </div>
         </div>
     </div>
@@ -36,42 +34,42 @@
 
 <script>
     $(document).ready(function() {
-        $("#form-tambah").validate({
+        $("#form-import").validate({
             rules: {
-                nama_suplier: {
+                file_supplier: {
                     required: true,
-                    minlength: 3,
-                    maxlength: 100
+                    extension: "xlsx"
                 },
-                kontak: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 15
-                },
-                alamat: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 255
-                }
             },
             submitHandler: function(form) {
+                var formData = new FormData(form); //formData digunakan untuk menghandle file
+
                 $.ajax({
                     url: form.action,
                     type: form.method,
-                    data: $(form).serialize(),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
                     success: function(response) {
                         if (response.status) {
-                            $('#myModal').modal('hide');
+                            window.parent.$('#myModal').modal(
+                                'hide'); // Pastikan modal yang ditutup benar
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            dataSuplier.ajax.reload();
+                            tableSupplier.ajax.reload();
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {
-                                $('#error-' + prefix).text(val[0]);
+                                if (prefix === 'Supplier_code' || prefix ===
+                                    'Supplier_nama') {
+                                    $('#error-' + prefix).text(val[0]);
+                                }
                             });
                             Swal.fire({
                                 icon: 'error',
@@ -79,6 +77,14 @@
                                 text: response.message
                             });
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan',
+                            text: 'Gagal mengupload file'
+                        });
                     }
                 });
                 return false;
@@ -88,10 +94,10 @@
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight: function(element, errorClass, validClass) {
+            highlight: function(element) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function(element, errorClass, validClass) {
+            unhighlight: function(element) {
                 $(element).removeClass('is-invalid');
             }
         });

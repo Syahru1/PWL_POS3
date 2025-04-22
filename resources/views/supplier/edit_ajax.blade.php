@@ -1,4 +1,4 @@
-@empty($suplier)
+@empty($supplier)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,67 +10,78 @@
             <div class="modal-body">
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
-                    Data suplier yang Anda cari tidak ditemukan.
+                    Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/suplier') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/supplier') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/suplier/' . $suplier->suplier_id . '/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/supplier/' . $supplier->supplier_id . '/update_ajax') }}" method="POST" id="form-edit-supplier">
         @csrf
-        @method('DELETE')
+        @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Suplier</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Supplier</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-warning">
-                        <h5><i class="icon fas fa-ban"></i> Konfirmasi !!!</h5>
-                        Apakah Anda ingin menghapus data suplier berikut?
+                    <div class="form-group">
+                        <label>Nama Supplier</label>
+                        <input value="{{ $supplier->nama_supplier }}" type="text" name="nama_supplier" id="nama_supplier"
+                            class="form-control" required>
+                        <small id="error-nama_supplier" class="error-text form-text text-danger"></small>
                     </div>
-                    <table class="table table-sm table-bordered table-striped">
-                        <tr>
-                            <th class="text-right col-3">ID Suplier :</th>
-                            <td class="col-9">{{ $suplier->suplier_id }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Nama Suplier :</th>
-                            <td class="col-9">{{ $suplier->nama_suplier }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Kontak :</th>
-                            <td class="col-9">{{ $suplier->kontak }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Alamat :</th>
-                            <td class="col-9">{{ $suplier->alamat }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Tanggal Dibuat :</th>
-                            <td class="col-9">{{ $suplier->created_at }}</td>
-                        </tr>
-                    </table>
+                    <div class="form-group">
+                        <label>Kontak</label>
+                        <input value="{{ $supplier->kontak }}" type="text" name="kontak" id="kontak"
+                            class="form-control" required>
+                        <small id="error-kontak" class="error-text form-text text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <textarea name="alamat" id="alamat" class="form-control" required>{{ $supplier->alamat }}</textarea>
+                        <small id="error-alamat" class="error-text form-text text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Timestamp</label>
+                        <input value="{{ $supplier->timestamps }}" type="text" name="timestamps" id="timestamps"
+                            class="form-control" disabled>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
         </div>
     </form>
     <script>
         $(document).ready(function() {
-            $("#form-delete").validate({
-                rules: {},
+            $("#form-edit-supplier").validate({
+                rules: {
+                    nama_supplier: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 100
+                    },
+                    kontak: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 15
+                    },
+                    alamat: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
                 submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
-                        type: form.method,
+                        type: 'PUT',
                         data: $(form).serialize(),
                         success: function(response) {
                             if (response.status) {
@@ -80,7 +91,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataSuplier.ajax.reload();
+                                dataSupplier.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable; // implementasi class Authenticatable
-
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 // class UserModel extends Model {
 class UserModel extends Authenticatable {
@@ -14,12 +15,15 @@ class UserModel extends Authenticatable {
 
     protected $table = 'm_user'; // Mendefinisikan nama tabel yang digunakan oleh model ini
     protected $primaryKey = 'user_id'; // Mendefinisikan primary key dari tabel yang digunakan
-    /**
-     * The attributes that are mass assignable
-     * 
-     * @var array
-     */
-    protected $fillable = ['username', 'password',  'nama', 'level_id', 'foto', 'created_at', 'updated_at'];
+
+    protected $fillable = [
+        'username', 
+        'password',  
+        'nama', 
+        'level_id', 
+        'foto_profil', 
+        'created_at', 
+        'updated_at'];
     protected $hidden = ['password']; // jangan di tampilkan saat select
     protected $casts = ['password' => 'hashed']; // casting password agar otomatis di hash
     

@@ -7,7 +7,7 @@
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
-            @empty($suplier)
+            @empty($supplier)
                 <div class="alert alert-danger alert-dismissible">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
                     Data yang Anda cari tidak ditemukan.
@@ -15,24 +15,24 @@
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
-                        <th>ID Suplier</th>
-                        <td>{{ $suplier->suplier_id }}</td>
+                        <th>ID Supplier</th>
+                        <td>{{ $supplier->supplier_id }}</td>
                     </tr>
                     <tr>
-                        <th>Nama Suplier</th>
-                        <td>{{ $suplier->nama_suplier }}</td>
+                        <th>Nama Supplier</th>
+                        <td>{{ $supplier->nama_supplier }}</td>
                     </tr>
                     <tr>
                         <th>Kontak</th>
-                        <td>{{ $suplier->kontak }}</td>
+                        <td>{{ $supplier->kontak }}</td>
                     </tr>
                     <tr>
                         <th>Alamat</th>
-                        <td>{{ $suplier->alamat }}</td>
+                        <td>{{ $supplier->alamat }}</td>
                     </tr>
                 </table>
             @endempty
-            <a href="{{ url('suplier') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+            <a href="{{ url('supplier') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
         </div>
     </div>
 @endsection

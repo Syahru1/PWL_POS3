@@ -33,20 +33,20 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     // Routes for dashboard (welcome.blade.php)
     Route::get('/', [WelcomeController::class, 'index']);
 
-    Route::get('/level', [LevelController::class, 'index']);
-    Route::get('/kategori', [KategoriController::class, 'index']);
-    Route::get('/user', [UserController::class, 'index']);
-    Route::get('/user/tambah', [UserController::class, 'tambah']);
-    Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.tambah_simpan');
-    Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-    // Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
-    Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('user.ubah_simpan');
-    Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
-    
-     // Routes for User
+    // Route::get('/level', [LevelController::class, 'index']);
+    // Route::get('/kategori', [KategoriController::class, 'index']);
+    // Route::get('/user', [UserController::class, 'index']);
+    // Route::get('/user/tambah', [UserController::class, 'tambah']);
+    // Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.tambah_simpan');
+    // Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
+    // // Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
+    // Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('user.ubah_simpan');
+    // Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
+
+    // Routes for User
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'index']);           // menampilkan halaman awal user
-        Route::post('/list', [UserController::class, 'list']);       // menampilkan data user dalam bentuk json untuk datatables   
+        Route::get('/list', [UserController::class, 'list']);       // menampilkan data user dalam bentuk json untuk datatables   
         Route::get('/create', [UserController::class, 'create']);    // menampilkan halaman form tambah user
         Route::post('/', [UserController::class, 'store']);          // menyimpan data user baru
         Route::get('/create_ajax', [UserController::class, 'create_ajax']); // Menampilkan halaman form tambah user Ajax
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         // Route::prefix('level')->group(function () {
         Route::group(['prefix' => 'level'], function () {
             Route::get('/', [LevelController::class, 'index']);          
-            Route::post('/list', [LevelController::class, 'list']);        
+            Route::get('/list', [LevelController::class, 'list']);        
             Route::get('/create', [LevelController::class, 'create']);    
             Route::post('/', [LevelController::class, 'store']);          
             Route::get('/create_ajax', [LevelController::class, 'create_ajax']); 
@@ -94,12 +94,12 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     // Routes for Kategori
     Route::group(['prefix' => 'kategori'], function () {
         Route::get('/', [KategoriController::class, 'index']);          
-        Route::post('/list', [KategoriController::class, 'list']);       
+        Route::get('/list', [KategoriController::class, 'list']);       
         Route::get('/create', [KategoriController::class, 'create']);    
         Route::post('/', [KategoriController::class, 'store']);          
         Route::get('/create_ajax', [KategoriController::class, 'create_ajax']); 
         Route::post('/ajax', [KategoriController::class, 'store_ajax']); 
-        Route::get('/{id}', [KategoriController::class, 'show']);        
+        Route::get('/{id}', [KategoriController::class, 'show']);     
         Route::get('/{id}/edit', [KategoriController::class, 'edit']);   
         Route::put('/{id}', [KategoriController::class, 'update']);      
         Route::get('/{id}/edit_ajax', [KategoriController::class, 'edit_ajax']);  
@@ -116,9 +116,9 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     // Routes for Suplier
     // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
     // Route::middleware(['authorize:ADM, MNG'])->group(function () {
-        Route::group(['prefix' => 'suplier'], function () {
+        Route::group(['prefix' => 'supplier'], function () {
             Route::get('/', [SupplierController::class, 'index']);         
-            Route::post('/list', [SupplierController::class, 'list']);      
+            Route::get('/list', [SupplierController::class, 'list']);      
             Route::get('/create', [SupplierController::class, 'create']);    
             Route::post('/', [SupplierController::class, 'store']);          
             Route::get('/create_ajax', [SupplierController::class, 'create_ajax']); 
@@ -162,8 +162,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
             Route::get('/export_pdf', [BarangController::class, 'export_pdf']); // export pdf
         });
     // });
+
+    Route::group(['prefix' => 'profile'], function () {
+        Route::post('/update-avatar', [ProfileController::class, 'updateAvatar']);
+    });
 });
-
-
-Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth');
-Route::post('/profile/update-foto', [ProfileController::class, 'uploadFoto'])->middleware('auth');

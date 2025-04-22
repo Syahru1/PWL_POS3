@@ -1,25 +1,25 @@
 <div class="sidebar">
     <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
         <a href="#" class="d-block">Muhammad Syahrul Gunawan</a>
       </div>
-    </div>
+    </div> --}}
 
     <!-- SidebarSearch Form -->
     <div class="form-inline mt-2">
       <div class="input-group" data-widget="sidebar-search">
-        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-sidebar">
-            <i class="fas fa-search fa-fw"></i>
-          </button>
-        </div>
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+              <button class="btn btn-sidebar">
+                  <i class="fas fa-search fa-fw"></i>
+              </button>
+          </div>
       </div>
-    </div>
+  </div>
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -45,12 +45,6 @@
                 <p>Data User</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ url('/profile') }}" class="nav-link {{ $activeMenu == 'profile' ? 'active' : '' }}">
-                  <i class="nav-icon far fa-user"></i>
-                  <p>Profile</p>
-              </a>
-          </li>
             <li class="nav-header">Data Barang</li>
             <li class="nav-item">
               <a href="{{ url('/kategori') }}" class="nav-link {{ ($activeMenu == 'kategori')? 'active' : ''}}">
@@ -66,9 +60,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/suplier') }}" class="nav-link {{ $activeMenu == 'suplier' ? 'active' : '' }}">
+          <a href="{{ url('/supplier') }}" class="nav-link {{ $activeMenu == 'supplier' ? 'active' : '' }}">
               <i class="nav-icon fas fa-truck"></i>
-              <p>Data Suplier</p>
+              <p>Data Supplier</p>
           </a>
         </li>
         <li class="nav-header">Data Transaksi</li>
@@ -90,20 +84,31 @@
     <!-- Logout Button -->
     <br><br>
     <div class="mt-4 mb-3 text-center">
-      <a href="javascript:void(0);" class="btn btn-danger btn-block" id="logout-btn">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </a>    
-      <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;"></form>
+        <a href="javascript:void(0);" class="btn btn-danger btn-block" id="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
     </div>
 
     <!-- Script Konfirmasi Logout -->
-  <script>
-    document.getElementById('logout-btn').addEventListener('click', function (e) {
-        e.preventDefault();
-        if (confirm('Yakin ingin logout?')) {
-            document.getElementById('logout-form').submit();
-        }
-    });
+    <script>
+      document.getElementById("logout-btn").addEventListener("click", function(event) {
+          event.preventDefault();
+  
+          Swal.fire({
+              title: "Apakah Anda yakin ingin logout?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#d33",
+              cancelButtonColor: "#3085d6",
+              confirmButtonText: "Ya, Logout",
+              cancelButtonText: "Batal"
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Redirect ke logout
+                  window.location.href = "{{ route('logout') }}";
+              }
+          });
+      });
   </script>
   </div>
     <!-- /.sidebar-menu -->

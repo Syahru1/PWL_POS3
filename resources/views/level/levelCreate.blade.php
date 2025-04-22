@@ -15,7 +15,7 @@
                     <div class="col-11">
                         <input type="text" class="form-control" id="level_kode" name="level_kode"
                             value="{{ old('level_kode') }}" required>
-                        @error('level_code')
+                        @error('level_kode')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>

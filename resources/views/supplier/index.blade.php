@@ -5,13 +5,13 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/suplier/import') }}')" class="btn btn-info">Import
-                    Suplier</button>
-                <a href="{{ url('/suplier/export_excel') }}" class="btn btn-primary"><i class="fa fa-file excel"></i> Export
-                    Suplier</a>
-                <a href="{{ url('/suplier/export_pdf') }}" class="btn btn-danger"><i class="fa fa-file pdf"></i> Export
+                <button onclick="modalAction('{{ url('/supplier/import') }}')" class="btn btn-info">Import
+                    Supplier</button>
+                <a href="{{ url('/supplier/export_excel') }}" class="btn btn-primary"><i class="fa fa-file excel"></i> Export
+                    Supplier</a>
+                <a href="{{ url('/supplier/export_pdf') }}" class="btn btn-danger"><i class="fa fa-file pdf"></i> Export
                     PDF</a>
-                <button onclick="modalAction('{{ url('suplier/create_ajax') }}')" class="btn btn-success">
+                <button onclick="modalAction('{{ url('supplier/create_ajax') }}')" class="btn btn-success">
                     Tambah Ajax
                 </button>
             </div>
@@ -24,11 +24,11 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_suplier">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Suplier</th>
+                        <th>Nama Supplier</th>
                         <th>Kontak</th>
                         <th>Alamat</th>
                         <th>Aksi</th>
@@ -53,16 +53,16 @@
             });
         }
 
-        var tableSuplier;
+        var tableSupplier;
         $(document).ready(function() {
-            tableSuplier = $('#table_suplier').DataTable({
+            tableSupplier = $('#table_supplier').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('suplier/list') }}",
+                    "url": "{{ url('supplier/list') }}",
                     "dataType": "json",
                     "type": "GET",
                     "data": function(d) {
-                        d.filter_suplier = $('.filter_suplier').val();
+                        d.filter_supplier = $('.filter_supplier').val();
                     }
                 },
                 columns: [{
@@ -72,7 +72,7 @@
                         searchable: false
                     },
                     {
-                        data: "nama_suplier",
+                        data: "nama_supplier",
                         className: "",
                         orderable: true,
                         searchable: true
@@ -97,13 +97,13 @@
                     }
                 ]
             });
-            $('#table_suplier_filter input').unbind().bind().on('keyup', function(e) {
+            $('#table_supplier_filter input').unbind().bind().on('keyup', function(e) {
                 if (e.keyCode == 13) { // enter key
-                    tableSuplier.search(this.value).draw();
+                    tableSupplier.search(this.value).draw();
                 }
             });
-            $('.filter_suplier').change(function() {
-                tableSuplier.draw();
+            $('.filter_supplier').change(function() {
+                tableSupplier.draw();
             });
         });
     </script>

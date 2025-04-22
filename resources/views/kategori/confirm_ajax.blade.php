@@ -68,7 +68,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                datakategori.ajax.reload();
+                                tableKategori.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
