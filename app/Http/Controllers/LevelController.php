@@ -280,7 +280,7 @@ class LevelController extends Controller
 
     public function import()
     {
-        return view('level.importLevel');
+        return view('level.import');
     }
 
     //import ajax

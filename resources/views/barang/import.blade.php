@@ -10,14 +10,18 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Download Template</label>
-                    <a href="{{ asset('template_barang.xlsx') }}" class="btn btn-info btnsm" download><i
+                    <a href="{{ asset('template_barang.xlsx') }}" class="btn btn-info btn
+sm" download><i
                             class="fa fa-file-excel"></i>Download</a>
-                    <small id="error-kategori_id" class="error-text form-text textdanger"></small>
+                    <small id="error-kategori_id" class="error-text form-text text
+danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
-                    <input type="file" name="file_barang" id="file_barang" class="formcontrol" required>
-                    <small id="error-file_barang" class="error-text form-text textdanger"></small>
+                    <input type="file" name="file_barang" id="file_barang" class="form
+control" required>
+                    <small id="error-file_barang" class="error-text form-text text
+danger"></small>
                 </div>
             </div>
             <div class="modal-footer">

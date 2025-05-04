@@ -795,7 +795,7 @@ class UserController extends Controller
  
     public function import()
     {
-        return view('user.importUser');
+        return view('user.import');
     }
     
     //import ajax

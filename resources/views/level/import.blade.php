@@ -12,10 +12,8 @@
                 <div class="form-group">
                     <label>Download Template</label>
                     <a href="{{ asset('template_level.xlsx') }}" class="btn btn-info btn-sm" download>
-                        <i class="fa fa-file-excel"></i> Download
-                    </a>
+                        <i class="fa fa-file-excel"></i> Download</a>
                     <small id="error-level_kode" class="error-text form-text text-danger"></small>
-                    <small id="error-level_nama" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
@@ -38,10 +36,10 @@
                 file_level: {
                     required: true,
                     extension: "xlsx"
-                },
+                }
             },
             submitHandler: function(form) {
-                var formData = new FormData(form); //formData digunakan untuk menghandle file
+                var formData = new FormData(form);
 
                 $.ajax({
                     url: form.action,
@@ -54,8 +52,7 @@
                     },
                     success: function(response) {
                         if (response.status) {
-                            window.parent.$('#myModal').modal(
-                                'hide'); // Pastikan modal yang ditutup benar
+                            $('#modal-master').modal('hide');
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
@@ -65,10 +62,7 @@
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {
-                                if (prefix === 'level_kode' || prefix ===
-                                    'level_nama') {
-                                    $('#error-' + prefix).text(val[0]);
-                                }
+                                $('#error-' + prefix).text(val[0]);
                             });
                             Swal.fire({
                                 icon: 'error',

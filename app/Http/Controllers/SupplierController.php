@@ -121,7 +121,7 @@ class SupplierController extends Controller
     {
         $suplier = SupplierModel::find($id);
 
-        return view('suplier.show_ajax', ['supplier' => $suplier]);
+        return view('supplier.show_ajax', ['supplier' => $suplier]);
     }
 
     // Menampilkan halaman form edit suplier
@@ -309,7 +309,7 @@ class SupplierController extends Controller
 
     public function import()
     {
-        return view('supplier.importSupplier');
+        return view('supplier.import');
     }
 
     //import ajax

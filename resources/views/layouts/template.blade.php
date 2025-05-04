@@ -28,7 +28,7 @@
 <div class="wrapper">
   <!-- Navbar -->
   @include('layouts.header')
- 
+
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     {{-- <!-- Brand Logo -->
@@ -37,13 +37,13 @@
       <span class="brand-text font-weight-light">PWL - Started Code</span>
     </a> --}}
     <a href="{{ url('/') }}" class="brand-link">
-      <img src="{{ asset('uploads/' . Auth::user()->foto) }}" 
+      <img src="{{ asset('uploads/' . Auth::user()->foto) }}"
            alt="Foto Profil User"
-           class="brand-image img-circle elevation-3" 
+           class="brand-image img-circle elevation-3"
            style="object-fit: cover; opacity: .8; width: 33px; height: 33px;">
            <span class="brand-text font-weight-light">PWL - Starter Code</span>
     </a>
-  
+
     <!-- Sidebar -->
     @include('layouts.sidebar')
     <!-- /.sidebar -->
@@ -93,10 +93,10 @@
                                 <div class="col-6 text-center border-right">
                                     <!-- Foto saat ini -->
                                     @if (auth()->user()->photo)
-                                    <img src="{{ auth()->user()->foto_profil ? asset('storage/profile/' . auth()->user()->foto_profil) : asset('adminlte/dist/img/avatar.png') }}" 
+                                    <img src="{{ auth()->user()->foto_profil ? asset('storage/profile/' . auth()->user()->foto_profil) : asset('adminlte/dist/img/avatar.png') }}"
                                     class="img-circle elevation-2" alt="Current Avatar" id="currentAvatar" width="120" height="120">
                                     @else
-                                    <img src="{{ auth()->user()->foto_profil ? asset('storage/profile/' . auth()->user()->foto_profil) : asset('adminlte/dist/img/avatar.png') }}" 
+                                    <img src="{{ auth()->user()->foto_profil ? asset('storage/profile/' . auth()->user()->foto_profil) : asset('adminlte/dist/img/avatar.png') }}"
                                     class="img-circle elevation-2" alt="User Image" id="currentAvatar" width="120" height="120">
                                     @endif
                                 </div>
@@ -142,8 +142,8 @@
 <!-- DataTables & Plugins -->
 <script src="{{ asset('adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('adminlte/plugins/datatables-responsive/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('adminlte/plugins/datatables-responsive/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('adminlte\plugins\datatables-responsive\js\dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('adminlte\plugins\datatables-responsive\js\responsive.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/jszip/jszip.min.js') }}"></script>

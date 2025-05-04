@@ -92,7 +92,7 @@
         </tr>
     </table>
 
-    <h3 class="text-center">LAPORAN DATA BARANG</h4>
+    <h3 class="text-center">LAPORAN DATA BARANG</h3>
         <table class="border-all">
             <thead>
                 <tr>
@@ -118,5 +118,4 @@
             </tbody>
         </table>
 </body>
-
 </html>
